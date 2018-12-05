@@ -1,0 +1,25 @@
+proxy:
+  secretToken: "bharatishere"
+  service:
+    type: NodePort
+    nodePorts:
+      http: 31000
+singleuser:
+  #storage:
+  #  type: none
+  #uid: 0
+  storage:
+    type: dynamic
+    capacity: 10Gi
+    dynamic:
+      storageClass: manila-cephfs-share-ond
+      #storageClass: local-storage
+hub:
+  db:
+    #type: sqlite-memory
+    type: sqlite-pvc
+    pvc:
+      accessModes:
+        - ReadWriteMany
+      storage: 1Gi
+      storageClassName: manila-cephfs-share-ond
