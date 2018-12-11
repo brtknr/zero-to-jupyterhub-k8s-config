@@ -75,6 +75,8 @@ jupyterhub:
   # remove or change for a custom cluster
   proxy:
     service:
-      type: NodePort
-      nodePorts:
-        http: 32000
+      #loadBalancerIP: 10.60.253.65
+      type: LoadBalancer
+      #type: NodePort
+      #nodePorts:
+      #  http: 32000
