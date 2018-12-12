@@ -1,4 +1,3 @@
 helm delete pangeo --purge
-helm reset --force
-kubectl delete -n kube-system svc/tiller-deploy deploy/tiller-deploy
-rm -rf ~/.helm
+helm reset --force --remove-helm-home   
+kubectl -n kube-system delete deploy/tiller-deploy svc/tiller-deploy

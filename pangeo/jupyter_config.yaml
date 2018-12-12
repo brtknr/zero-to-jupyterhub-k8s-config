@@ -3,12 +3,13 @@
 jupyterhub:
   singleuser:
     cmd: ['start-singleuser.sh']
+    startTimeout: 600
     extraEnv:
       EXTRA_PIP_PACKAGES: >-
       GCSFUSE_BUCKET: pangeo-data
     storage:
       type: dynamic
-      capacity: 10Gi
+      capacity: 10G
       dynamic:
         storageClass: manila-cephfs-share-ond
       #extraVolumes:
@@ -33,7 +34,7 @@ jupyterhub:
       pvc:
         accessModes:
           - ReadWriteMany
-        storage: 1Gi
+        storage: 1G
         storageClassName: manila-cephfs-share-ond
     extraConfig:
       customPodHook: |
@@ -56,7 +57,7 @@ jupyterhub:
       - name: custom-templates
         gitRepo:
           repository: "https://github.com/pangeo-data/pangeo-custom-jupyterhub-templates.git"
-          revision: "b09721bb1a1248dc115730d3c8a791600eae257e"
+          revision: "da496d24ec603a0b5f9932bfeae40594e8dff5a4"
     extraVolumeMounts:
       - mountPath: /usr/local/share/jupyterhub/custom_templates
         name: custom-templates
@@ -75,8 +76,10 @@ jupyterhub:
   # remove or change for a custom cluster
   proxy:
     service:
-      #loadBalancerIP: 10.60.253.65
+      annotations:
+        service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
       type: LoadBalancer
+      #loadBalancerIP: 10.60.253.65
       #type: NodePort
       #nodePorts:
       #  http: 32000

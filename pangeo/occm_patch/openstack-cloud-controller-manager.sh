@@ -96,7 +96,7 @@ EOF
 
 kubectl apply --validate=false -f ${ADMIN_RBAC}
 
-if [ -z "${TRUST_ID}" ] || [ "$(echo "${CLOUD_PROVIDER_ENABLED}" | tr '[:upper:]' '[:lower:]')" != "true" ]; then
+if [ -z "${TRUST_ID}" ]; then
    exit 0
 fi
 
@@ -189,5 +189,5 @@ spec:
 EOF
 }
 
-kubectl create -f ${OCCM}
+kubectl replace -f ${OCCM} --force
 
